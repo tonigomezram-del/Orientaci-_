@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Orientació Acadèmica · Olot</title>
+  <meta name="description" content="Plataforma d'orientació acadèmica i professional per a l'alumnat de l'ESO a Olot. Explora itineraris, centres, cicles formatius i batxillerat." />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script type="module" crossorigin src="/assets/index-DpLdJbfu.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-SDnUVmT-.css">
+</head>
+<body>
+  <!-- Decorative blobs -->
+  <div class="bg-blobs" aria-hidden="true">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+  </div>
+
+  <!-- Auth screen (shown before login) -->
+  <div id="auth-screen" role="main"></div>
+
+  <!-- Main app (shown after login) -->
+  <div id="app" style="display:none;">
+
+    <!-- Header -->
+    <header class="app-header" role="banner">
+      <div class="header-inner">
+        <div class="header-brand">
+          <div class="brand-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76" fill="white" stroke="none"/>
+            </svg>
+          </div>
+          <div class="brand-text">
+            <span class="brand-title">Orientació Acadèmica</span>
+            <span class="brand-subtitle" id="brand-subtitle">Olot · Garrotxa</span>
+          </div>
+        </div>
+
+        <nav class="main-nav" role="navigation" aria-label="Navegació principal">
+          <ul class="nav-list" role="list" id="main-nav-list">
+            <!-- Sections comunes -->
+            <li><button class="nav-btn active" data-section="itineraris">
+              <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6l6-3 6 3 6-3v15l-6 3-6-3-6 3V6z"/><line x1="9" y1="3" x2="9" y2="18"/><line x1="15" y1="6" x2="15" y2="21"/></svg></span>
+              <span class="nav-label">Itineraris</span>
+            </button></li>
+            <li><button class="nav-btn" data-section="cami">
+              <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></span>
+              <span class="nav-label">Camí</span>
+            </button></li>
+            <li><button class="nav-btn" data-section="mapa">
+              <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span>
+              <span class="nav-label">Mapa</span>
+            </button></li>
+            <li><button class="nav-btn" data-section="comparador">
+              <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/></svg></span>
+              <span class="nav-label">Comparador</span>
+            </button></li>
+            <li><button class="nav-btn" data-section="simulador">
+              <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></svg></span>
+              <span class="nav-label">Simulador</span>
+            </button></li>
+            <!-- Aula (professor i alumne) -->
+            <li class="nav-separator" aria-hidden="true"></li>
+            <li><button class="nav-btn" data-section="classes">
+              <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg></span>
+              <span class="nav-label">Classes</span>
+            </button></li>
+            <li><button class="nav-btn" data-section="noms">
+              <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+              <span class="nav-label">Alumnat</span>
+            </button></li>
+            <li><button class="nav-btn" data-section="tasques">
+              <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg></span>
+              <span class="nav-label">Tasques</span>
+            </button></li>
+            <li><button class="nav-btn" data-section="pissarra">
+              <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></span>
+              <span class="nav-label">Pissarra</span>
+            </button></li>
+            <li><button class="nav-btn" data-section="planner">
+              <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span>
+              <span class="nav-label">Planner</span>
+            </button></li>
+            <li><button class="nav-btn" data-section="recorreguts">
+              <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg></span>
+              <span class="nav-label">Recorreguts</span>
+            </button></li>
+          </ul>
+          <button class="nav-mobile-toggle" aria-label="Obrir menú" aria-expanded="false">
+            <span></span><span></span><span></span>
+          </button>
+        </nav>
+
+        <!-- User widget -->
+        <div class="user-widget" id="user-widget">
+          <div class="user-avatar" id="user-avatar" aria-hidden="true"></div>
+          <div class="user-info">
+            <div class="user-name" id="user-name">—</div>
+            <div class="user-rol"  id="user-rol">—</div>
+          </div>
+          <button class="btn btn--secondary btn--sm" id="btn-switch-rol" title="Canviar mode" aria-label="Canviar rol">
+          </button>
+          <button class="btn btn--ghost btn--sm btn--icon" id="btn-logout" title="Tancar sessió" aria-label="Tancar sessió">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main content -->
+    <main class="app-main" role="main">
+      <section id="section-itineraris"  class="app-section active"  aria-label="Itineraris acadèmics"></section>
+      <section id="section-cami"        class="app-section"         aria-label="Camí acadèmic personal"></section>
+      <section id="section-noms"        class="app-section"         aria-label="Alumnat"></section>
+      <section id="section-pissarra"    class="app-section"         aria-label="Pissarra de dinàmiques"></section>
+      <section id="section-recorreguts" class="app-section"         aria-label="Recorreguts guardats"></section>
+      <section id="section-mapa"        class="app-section"         aria-label="Mapa de centres"></section>
+      <section id="section-comparador"  class="app-section"         aria-label="Comparador de camins"></section>
+      <section id="section-simulador"   class="app-section"         aria-label="Simulador de decisió"></section>
+      <section id="section-planner"     class="app-section"         aria-label="Planner d'orientació"></section>
+      <section id="section-classes"     class="app-section"         aria-label="Gestió de classes"></section>
+      <section id="section-tasques"     class="app-section"         aria-label="Tasques i activitats"></section>
+    </main>
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</body>
+</html>
